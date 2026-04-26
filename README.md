@@ -1,0 +1,186 @@
+# E-Commerce Sales & Customer Behaviour Analysis
+
+A complete end-to-end Data Analyst portfolio project using real e-commerce data from Olist, a Brazilian marketplace with 100,000+ orders.
+
+---
+
+## Project Overview
+
+This project analyses real e-commerce data to answer 4 business questions:
+
+1. **What does our sales performance look like?** — Exploratory Data Analysis
+2. **Can we predict if a customer will be unhappy?** — Machine Learning
+3. **Who are our most valuable customers?** — RFM Segmentation
+4. **Can SQL confirm our findings?** — SQL Analysis
+
+---
+
+## Key Findings
+
+| Finding | Result |
+|---|---|
+| Total Revenue Analysed | R$ 15.41M |
+| Total Orders | 96,000+ |
+| Average Order Value | R$ 159.80 |
+| Average Review Score | 4.16 / 5 |
+| Late Delivery Rate | 8.07% |
+| Top Product Category | Health & Beauty |
+| Top State by Orders | SP (São Paulo) |
+| Best ML Model | Random Forest |
+| Top Predictor of Satisfaction | Delivery Days |
+
+---
+
+## Project Structure
+
+```
+olist_project/
+│
+├── data/                                    ← Raw CSV files (download from Kaggle)
+│   ├── olist_orders_dataset.csv
+│   ├── olist_customers_dataset.csv
+│   ├── olist_order_items_dataset.csv
+│   ├── olist_order_payments_dataset.csv
+│   ├── olist_order_reviews_dataset.csv
+│   ├── olist_products_dataset.csv
+│   ├── olist_sellers_dataset.csv
+│   ├── olist_geolocation_dataset.csv
+│   └── product_category_name_translation.csv
+│
+├── Olist_Complete_Analysis.ipynb            ← Main notebook (all phases)
+├── master_cleaned.csv                       ← Clean dataset (output of Phase 2)
+├── rfm_segments.csv                         ← RFM customer segments (output of Phase 5)
+├── Olist_Dashboard.pbix                     ← Power BI Dashboard
+│
+├── chart1_revenue.png                       ← Monthly revenue trend
+├── chart2_categories_states.png             ← Top categories and states
+├── chart3_delivery.png                      ← Delivery performance
+├── chart4_timing.png                        ← When customers buy
+├── chart5_ml_results.png                    ← ML model comparison
+├── chart6_decision_tree.png                 ← Decision tree visual
+├── chart7_confusion_matrix.png              ← Confusion matrix
+└── chart8_rfm.png                           ← RFM segment chart
+```
+
+---
+
+## Technologies Used
+
+| Tool | Purpose |
+|---|---|
+| Python | Data cleaning, EDA, Machine Learning, RFM |
+| Pandas & NumPy | Data manipulation |
+| Matplotlib & Seaborn | Data visualisation |
+| Scikit-learn | Machine Learning models |
+| SQLite (Python) | SQL queries and analysis |
+| Power BI | Interactive dashboard |
+
+---
+
+## Phases
+
+### Phase 1 — Data Loading
+- Loaded 9 CSV files from Kaggle Olist dataset
+- Merged into one master table with 99,441 rows and 28 columns
+- Aggregated payments, order items, and reviews per order
+
+### Phase 2 — Data Cleaning
+- Fixed missing values across all columns
+- Converted date columns to datetime format
+- Filtered to delivered orders only (96,000+ rows)
+- Engineered new columns: `delivery_days`, `is_late`, `order_month_yr`, `order_value`
+- Removed outliers (price = 0, delivery > 120 days)
+
+### Phase 3 — Exploratory Data Analysis
+- **Revenue Trend:** Business grew steadily from 2016 to 2018 with clear seasonal peaks
+- **Top Categories:** Health & Beauty drives the most revenue
+- **Top States:** São Paulo (SP) accounts for the largest share of orders
+- **Delivery Insight:** Late deliveries score significantly lower in reviews
+- **Timing:** Weekdays see more orders than weekends
+
+### Phase 4 — Machine Learning
+Built 3 classification models to predict whether a customer will leave a LOW (1-2 stars) or HIGH (4-5 stars) review:
+
+| Model | Accuracy |
+|---|---|
+| Logistic Regression | Run notebook for exact % |
+| Decision Tree | Run notebook for exact % |
+| Random Forest | Run notebook for exact % (Best) |
+
+**Key Finding:** `delivery_days` is the #1 predictor of customer satisfaction — faster delivery directly leads to better reviews.
+
+### Phase 5 — RFM Customer Segmentation
+Segmented 93,000+ customers into 4 groups based on Recency, Frequency, and Monetary scores:
+
+| Segment | Description | Business Action |
+|---|---|---|
+| Champions | Recent, frequent, high spenders | Reward with VIP discounts and early access |
+| Loyal | Regular buyers, decent spend | Send personalised offers, ask for referrals |
+| At Risk | Used to buy but haven't recently | Send a limited-time re-engagement coupon |
+| Lost | Haven't bought in a long time | Run a win-back campaign with a big discount |
+
+### Phase 6 — SQL Analysis
+Wrote 6 SQL queries covering 3 difficulty levels:
+
+- **Basic:** Overall KPIs, top categories by revenue
+- **Moderate:** CASE WHEN for delivery status, JOIN across two tables
+- **Advanced:** RANK() window function to rank categories per state, CTE to identify repeat vs one-time buyers
+
+### Power BI Dashboard
+3-page interactive dashboard:
+- **Page 1 — E-Commerce Sales Overview:** Revenue trend, top categories, top states, KPI cards
+- **Page 2 — Delivery Performance & Customer Satisfaction:** On-time rate, late delivery impact on reviews, delivery days scatter
+- **Page 3 — Customer Segmentation:** RFM segment breakdown, revenue by segment, customer distribution
+
+---
+
+## How to Run
+
+### Step 1 — Download the dataset
+Go to [Kaggle — Olist Brazilian E-Commerce Dataset](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce) and download all CSV files. Place them in a `data/` subfolder.
+
+### Step 2 — Set up Python environment
+```bash
+# Create virtual environment with Python 3.11
+py -3.11 -m venv olist_env
+olist_env\Scripts\activate        # Windows
+source olist_env/bin/activate     # Mac/Linux
+
+# Install required libraries
+pip install pandas numpy matplotlib seaborn scikit-learn ipykernel jupyter
+```
+
+### Step 3 — Run the notebook
+Open `Olist_Complete_Analysis.ipynb` in VS Code and run all cells from top to bottom.
+
+### Step 4 — Power BI Dashboard
+Open Power BI Desktop and import `master_cleaned.csv` and `rfm_segments.csv` to explore the interactive dashboard.
+
+---
+
+## Dashboard Screenshots
+
+### Page 1 — Sales Overview
+![Sales Overview](dashboard_page1.png)
+
+### Page 2 — Delivery & Customer Satisfaction
+![Delivery Performance](dashboard_page2.png)
+
+### Page 3 — Customer Segmentation
+![RFM Segmentation](dashboard_page3.png)
+
+---
+
+## Dataset Source
+
+**Brazilian E-Commerce Public Dataset by Olist**  
+Available on Kaggle: https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce  
+License: CC BY-NC-SA 4.0
+
+---
+
+## Author
+
+**Pallavi Desai**  
+Data Analyst | Python · SQL · Power BI  
+[LinkedIn](https://linkedin.com/in/pallavi-desai-6010b9380) | pallavidesai2002@gmail.com
